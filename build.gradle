@@ -30,6 +30,7 @@ dependencies {
     compile('org.projectlombok:lombok') // lombok
     compile('org.springframework.boot:spring-boot-starter-data-jpa') // SpringJPA
     compile('com.h2database:h2') // inmemory DB
+    compile('org.springframework.boot:spring-boot-starter-mustache')
     testCompile('org.springframework.boot:spring-boot-starter-test') // junit
 }
 
