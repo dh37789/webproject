@@ -3,6 +3,8 @@ package com.mho.springboot.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mho.springboot.domain.posts.Posts;
 import com.mho.springboot.domain.posts.PostsRepository;
+import com.mho.springboot.model.response.ListResult;
+import com.mho.springboot.service.response.ResponseService;
 import com.mho.springboot.web.dto.PostsSaveRequestDto;
 import com.mho.springboot.web.dto.PostsUpdateRequestDto;
 import org.junit.After;
@@ -40,6 +42,9 @@ public class PostsApiControllerTest {
 
     @Autowired
     private PostsRepository postsRepository;
+
+    @Autowired
+    private ResponseService responseService;
 
     @Autowired
     private WebApplicationContext context;
@@ -83,9 +88,17 @@ public class PostsApiControllerTest {
 //        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 //        assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
-        List<Posts> all = postsRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(title);
-        assertThat(all.get(0).getContent()).isEqualTo(content);
+        //List<Posts> all = postsRepository.findAll();
+        ListResult<Posts> all = responseService.getListResult(postsRepository.findAll());
+        assertThat(all.getList().get(0).getTitle()).isEqualTo(title);
+        assertThat(all.getList().get(0).getContent()).isEqualTo(content);
+    }
+
+    @Test
+    @WithMockUser(roles="USER")
+    public void Posts_response() throws Exception {
+        ListResult<Posts> all = responseService.getListResult(postsRepository.findAll());
+
     }
 
     @Test

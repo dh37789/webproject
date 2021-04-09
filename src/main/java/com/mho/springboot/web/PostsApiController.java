@@ -1,8 +1,10 @@
 package com.mho.springboot.web;
 
+import com.mho.springboot.model.response.ListResult;
 import com.mho.springboot.model.response.SingleResult;
 import com.mho.springboot.service.posts.PostsService;
 import com.mho.springboot.service.response.ResponseService;
+import com.mho.springboot.web.dto.PostsListResponseDto;
 import com.mho.springboot.web.dto.PostsResponseDto;
 import com.mho.springboot.web.dto.PostsSaveRequestDto;
 import com.mho.springboot.web.dto.PostsUpdateRequestDto;
@@ -29,6 +31,11 @@ public class PostsApiController {
     @GetMapping("/api/v1/posts/{id}")
     public SingleResult<PostsResponseDto> findById (@PathVariable Long id) {
         return responseService.getSingleResult(postsService.findById(id));
+    }
+
+    @GetMapping("/api/v1/posts")
+    public ListResult<PostsListResponseDto> findAllDesc () {
+        return responseService.getListResult(postsService.findAllDesc());
     }
 
     @DeleteMapping("/api/v1/posts/{id}")
